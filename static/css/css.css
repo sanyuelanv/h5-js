@@ -1,0 +1,10 @@
+* {margin: 0px;padding: 0px;border: 0px;}
+body {font:normal 14px/1.5 "\5FAE\8F6F\96C5\9ED1", Helvetica,STHeiti, Droidsansfallback;color:#444;background-color:#eff3f6;-webkit-user-select: none;-webkit-text-size-adjust: none;}
+li{list-style: none;}
+a{text-decoration: none;}
+body,html{width: 100%;height: 100%;overflow: hidden;}/*如果存在输入的话，不要在这里填写height:100%*/
+#main {max-width: 640px;height:100%;position: relative;margin: 0 auto;}/*如果设计稿是其他尺寸则需要改过来,*/
+
+#take{width: 596px;height: 549px;background-repeat: no-repeat;background-image: url('../img/upImg.png');left: 22px;top:50px;position: absolute;}
+
+#makePhoto{border-radius: 30px;}

@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1, user-scalable=no, minimal-ui">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no, email=no">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="true">
+    <meta name="MobileOptimized" content="320">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="x5-orientation" content="portrait">
+    <meta name="full-screen" content="yes">
+    <meta name="x5-fullscreen" content="true">
+    <meta name="browsermode" content="application">
+    <meta name="x5-page-mode" content="app">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta http-equiv="description" content="">
+    <title>转盘demo</title>
+    <link rel="stylesheet" type="text/css" href="static/css/css.css">
+    <style>
+        html,
+        body {
+            width: 100%;
+            background-color: #000;
+            overflow-x: hidden;
+        }
+        
+        #rotate {
+            -webkit-transform: translate3d(0, 0, 0);
+            -webkit-backface-visibility: hidden;
+            -webkit-perspective: 1000;
+        }
+        
+        .btn {
+            width: 100px;
+            height: 100px;
+            background: #ccc;
+            position: absolute;
+            bottom: 0px;
+            left: 0;
+            line-height: 100px;
+            text-align: center
+        }
+        
+        .btn2 {
+            width: 100px;
+            height: 100px;
+            background: #ccc;
+            position: absolute;
+            bottom: 0px;
+            left: 135px;
+            line-height: 100px;
+            text-align: center
+        }
+        
+        .btn3 {
+            width: 100px;
+            height: 100px;
+            background: #ccc;
+            position: absolute;
+            bottom: 0px;
+            left: 270px;
+            line-height: 100px;
+            text-align: center
+        }
+        
+        .btn4 {
+            width: 100px;
+            height: 100px;
+            background: #ccc;
+            position: absolute;
+            bottom: 0px;
+            left: 405px;
+            line-height: 100px;
+            text-align: center
+        }
+        
+        .btn5 {
+            width: 100px;
+            height: 100px;
+            background: #ccc;
+            position: absolute;
+            bottom: 0px;
+            left: 540px;
+            line-height: 100px;
+            text-align: center
+        }
+        
+        #canvas {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            margin-left: -243px;
+            margin-top: -243px;
+        }
+
+    </style>
+    <script src="static/js/command/command.js"></script>
+</head>
+
+<body>
+    <div id="main"></div>
+    <div class="btn">普通转动</div>
+    <div class="btn2">普通重置</div>
+    <div class="btn3">一直转动</div>
+    <div class="btn4">停止一直转动</div>
+    <canvas id='canvas'></canvas>
+</body>
+<script src="static/js/rotate.js"></script>
+<script src="static/js/command/jquery-1.11.1.js"></script>
+<script>
+    $(document).ready(function(e) {
+        function stopScrolling(e) {
+            e.preventDefault();
+        }
+        document.addEventListener('touchmove', stopScrolling, false);
+        var WIDTH = $(window).width();
+        var HEIGHT = $(window).height();
+        /*实例化一个转盘对象 :
+         采用背景图分别是转盘和指针的双层div，绝对定位到指定位置，
+         注意：
+         两者尺寸一致，指针定位靠png图片定位到圆心
+         占用html id有rotate。
+         参数{
+         id, //标签在这个id的层级里面新建一个div，就是我们的刮刮乐层
+         size,//尺寸，填写方式是{w:XXX,h:XXX}
+         pos, //位置，填写方式是{x:XXX,y:XXX}，左上角为圆角
+         bg,  //圆盘图片地址
+         zhen //指针图片地址
+         }
+         函数：
+         rotate(time,angle) time:秒数，angle:角度，再次rotate的时候需要reset才行
+         reSet()            重置回到原点，每次reSet之后setTimeout一个时间才再执行rotate
+         */
+        var canvas = document.getElementById('canvas');
+        if (canvas.getContext) {
+            var ctx = canvas.getContext('2d');
+        }
+        canvas.width = 486;
+        canvas.height = 486;
+        var xpos = canvas.width / 2;
+        var ypos = canvas.height / 2;
+        var imgPan = new Image();
+        imgPan.src = 'static/img/pan.png';
+        imgPan.onload = function() {
+/*            ctx.translate(xpos, ypos);
+            ctx.rotate(359*Math.PI/180);
+            ctx.translate(-xpos, -ypos);*/
+            ctx.drawImage(imgPan, xpos - imgPan.width / 2, ypos - imgPan.height / 2);
+        };
+        /*
+            1000 360度
+            50    
+        */
+        var speed = 360;
+        var timeStamp = setInterval(function(){
+            speed += 7.2;
+            if(speed > 360){
+                clearInterval(timeStamp);
+                return;
+            }
+            ctx.clearRect(0,0,486,486);
+            ctx.translate(xpos, ypos);
+            ctx.rotate(speed*Math.PI/180);
+            console.log(speed);
+            ctx.translate(-xpos, -ypos);
+            ctx.drawImage(imgPan, xpos - imgPan.width / 2, ypos - imgPan.height / 2);
+        },20);
+    });
+
+</script>
+
+</html>

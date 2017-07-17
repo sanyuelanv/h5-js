@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1, user-scalable=no, minimal-ui">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no, email=no">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="true">
+    <meta name="MobileOptimized" content="320">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="x5-orientation" content="portrait">
+    <meta name="full-screen" content="yes">
+    <meta name="x5-fullscreen" content="true">
+    <meta name="browsermode" content="application">
+    <meta name="x5-page-mode" content="app">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta http-equiv="description" content="">
+    <title>刮刮乐</title>
+    <link rel="stylesheet" type="text/css" href="static/css/css.css">
+    <style>
+        html,body{width: 100%;background-color: #000;overflow-x: hidden;}
+        .btn{width:100px;height: 100px;background:#ccc;position:absolute;bottom:0px;left:0;line-height: 100px;text-align: center}
+        .btn2{width:100px;height: 100px;background:#ccc;position:absolute;bottom:0px;left:135px;line-height: 100px;text-align: center}
+    </style>
+    <script src="static/js/command/command.js"></script>
+</head>
+<body>
+<div id="main"></div>
+<div class="btn">重置</div>
+<div class="btn2">换背景</div>
+
+<script src="static/js/scratch.js"></script>
+<script src="static/js/command/jquery-1.11.1.js"></script>
+<script>
+    $(document).ready(function(e) {
+        function stopScrolling(e) {e.preventDefault();}
+        document.addEventListener('touchmove', stopScrolling, false);
+        var WIDTH = $(window).width();
+        var HEIGHT = $(window).height();
+        var func = function(){console.log('over');};
+        var s = new scratch({
+            id:'main',
+            size:{w:WIDTH,h:HEIGHT},
+            pos:{x:0,y:0},
+            bottom:'static/img/bg.jpg',
+            surface:'static/img/new_bg.jpg',
+            touchSize:200,
+            precent:0.5,
+            alpha:0.9,
+            callBack:func
+        });
+        $('.btn').on('touchend',function(){s.resetCanvas()});
+        $('.btn2').on('touchend',function(){s.changeBottom('#fff')});
+    });
+</script>
+</body>
+</html>
