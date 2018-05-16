@@ -107,11 +107,8 @@
 
 <body>
     <div id="main"></div>
-    <div class="btn">普通转动</div>
-    <div class="btn2">普通重置</div>
-    <div class="btn3">一直转动</div>
-    <div class="btn4">停止一直转动</div>
-    <canvas id='canvas'></canvas>
+    <div class="btn">一直转动</div>
+    <div class="btn2">停止一直转动</div>
 </body>
 <script src="static/js/rotate.js"></script>
 <script src="static/js/command/jquery-1.11.1.js"></script>
@@ -139,40 +136,24 @@
          rotate(time,angle) time:秒数，angle:角度，再次rotate的时候需要reset才行
          reSet()            重置回到原点，每次reSet之后setTimeout一个时间才再执行rotate
          */
-        var canvas = document.getElementById('canvas');
-        if (canvas.getContext) {
-            var ctx = canvas.getContext('2d');
-        }
-        canvas.width = 486;
-        canvas.height = 486;
-        var xpos = canvas.width / 2;
-        var ypos = canvas.height / 2;
-        var imgPan = new Image();
-        imgPan.src = 'static/img/pan.png';
-        imgPan.onload = function() {
-/*            ctx.translate(xpos, ypos);
-            ctx.rotate(359*Math.PI/180);
-            ctx.translate(-xpos, -ypos);*/
-            ctx.drawImage(imgPan, xpos - imgPan.width / 2, ypos - imgPan.height / 2);
-        };
-        /*
-            1000 360度
-            50    
-        */
-        var speed = 360;
-        var timeStamp = setInterval(function(){
-            speed += 7.2;
-            if(speed > 360){
-                clearInterval(timeStamp);
-                return;
-            }
-            ctx.clearRect(0,0,486,486);
-            ctx.translate(xpos, ypos);
-            ctx.rotate(speed*Math.PI/180);
-            console.log(speed);
-            ctx.translate(-xpos, -ypos);
-            ctx.drawImage(imgPan, xpos - imgPan.width / 2, ypos - imgPan.height / 2);
-        },20);
+         var r = new Rotate({
+            //把转盘层创建在指定id的div里面
+            id:'main',          
+            //定义大小
+            size:{w:486,h:486},
+            //定义位置
+            pos:{x:77,y:100},   
+            //定义转盘图片
+            bg:'static/img/pan.png',  
+            //定义指针图片
+            zhen:'static/img/zhen.png'  
+        });
+        $('.btn').click(function(){
+            r.rotateJS()
+        })
+        $('.btn2').click(function(){
+            r.StopJS(25)
+        })
     });
 
 </script>

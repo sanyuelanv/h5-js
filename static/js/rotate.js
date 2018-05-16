@@ -46,20 +46,19 @@ var Rotate = function(value){
         var speed = 1;
         function step(timestamp){
             if(start==null){start = timestamp;}
-            var progress = timestamp -start;
+            var progress = timestamp - start;
             angle+=speed;
             domID.style.webkitTransform = 'rotateZ('+angle+'deg)';
             domID.style.transform = 'rotateZ('+angle+'deg)';
-            if(progress > 12000 && FLAG != 0){
+            if(FLAG != 0){
                 if(speed > 3){speed-=0.1;}
                 else if(speed <= 3){
-                    //if(angle%360 == 0){}
                     if(parseInt(angle%360) - FLAG == 0){return;}
                     if(parseInt((angle+1)%360) - FLAG == 0){return;}
                     if(parseInt((angle-1)%360) - FLAG == 0){return;}
                 }
             }
-            else{if(speed < 13){speed+=0.08;}}
+            else{if(speed < 10){speed+=0.08;}}
             requestAnimationFrame(step);
         }
         action = requestAnimationFrame(step);
